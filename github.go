@@ -42,3 +42,20 @@ func ListRepositoriesOrg(ctx context.Context, personalToken, OrgName string) (de
 	}
 	return
 }
+
+func ListRepositoriesOnlydDetail(ctx context.Context, personalToken, OrgName string) (dest []Repositories, err error) {
+	List, err := ListRepositoriesOrg(ctx, personalToken, OrgName)
+	if err != nil {
+		return nil, err
+	}
+	dest = make([]Repositories, 0, len(List))
+	for _, v := range List {
+		data := Repositories{
+			Name:     v.Name,
+			FullName: v.FullName,
+			Homepage: v.Homepage,
+		}
+		dest = append(dest, data)
+	}
+	return
+}
