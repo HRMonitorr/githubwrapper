@@ -24,3 +24,21 @@ func TestGetCommitAll(t *testing.T) {
 	fmt.Printf("%+v\n", err)
 	fmt.Printf("%+v\n", comms)
 }
+
+func TestGetBranch2(t *testing.T) {
+	branches, err := GetBranch(context.Background(),
+		PersonalToken,
+		OwnerName,
+		Reponame)
+	fmt.Printf("%+v\n", branches)
+	fmt.Printf("%+v\n", err)
+}
+
+func TestGetListRepositories(t *testing.T) {
+	list, err := ListRepositoriesOrg(context.Background(),
+		PersonalToken,
+		OwnerName,
+	)
+	fmt.Printf("%+v\n", list)
+	fmt.Printf("%+v\n", err)
+}
