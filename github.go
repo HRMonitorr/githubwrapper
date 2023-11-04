@@ -3,20 +3,26 @@ package githubwrapper
 import (
 	"context"
 	"github.com/google/go-github/v56/github"
-	"golang.org/x/oauth2"
 )
 
-func GetCommits(ctx context.Context, personalToken, repoName, ownerName string) ([]*github.RepositoryCommit, error) {
-	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: personalToken},
-	)
-	tc := oauth2.NewClient(ctx, ts)
-	client := github.NewClient(tc)
+func MakeClient(personalToken string) *github.Client {
+	client := github.NewClient(nil).WithAuthToken(personalToken)
+	return client
+}
 
-	commits, _, err := client.Repositories.ListCommits(ctx, ownerName, repoName, nil)
+func ListCommitALL(ctx context.Context, PersonalToken, repoName, ownerName string) ([]*github.RepositoryCommit, error) {
+	commits, _, err := MakeClient(PersonalToken).Repositories.ListCommits(ctx, ownerName, repoName, nil)
 	if err != nil {
 		return nil, err
 	}
 
+	return commits, nil
+}
+
+func GetCommit(ctx context.Context, personalToken, repoName, ownerName, sha string) (*github.RepositoryCommit, error) {
+	commits, _, err := MakeClient(personalToken).Repositories.GetCommit(ctx, ownerName, repoName, sha, nil)
+	if err != nil {
+		return nil, err
+	}
 	return commits, nil
 }
