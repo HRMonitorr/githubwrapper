@@ -26,3 +26,19 @@ func GetCommit(ctx context.Context, personalToken, repoName, ownerName, sha stri
 	}
 	return commits, nil
 }
+
+func GetBranch(ctx context.Context, personalToken, repoName, ownerName string) ([]*github.Branch, error) {
+	branches, _, err := MakeClient(personalToken).Repositories.ListBranches(ctx, ownerName, repoName, nil)
+	if err != nil {
+		return nil, err
+	}
+	return branches, nil
+}
+
+func ListRepositoriesOrg(ctx context.Context, personalToken, OrgName string) (dest []*github.Repository, err error) {
+	dest, _, err = MakeClient(personalToken).Repositories.ListByOrg(ctx, OrgName, nil)
+	if err != nil {
+		return nil, err
+	}
+	return
+}
