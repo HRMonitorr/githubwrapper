@@ -123,3 +123,9 @@ type Commit struct {
 		} `json:"items"`
 	} `json:"items"`
 }
+
+type Repositories struct {
+	Name     string `json:"name"`
+	FullName string `json:"full-name"`
+	Homepage string `json:"homepage"`
+}
