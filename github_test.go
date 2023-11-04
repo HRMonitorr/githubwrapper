@@ -35,10 +35,14 @@ func TestGetBranch2(t *testing.T) {
 }
 
 func TestGetListRepositories(t *testing.T) {
-	list, err := ListRepositoriesOrg(context.Background(),
+	//list, err := ListRepositoriesOrg(context.Background(),
+	//	PersonalToken,
+	//	OwnerName,
+	//)
+	Det, err := ListRepositoriesOnlydDetail(context.Background(),
 		PersonalToken,
 		OwnerName,
 	)
-	fmt.Printf("%+v\n", list)
+	fmt.Printf("%+v\n", *Det[0].Name)
 	fmt.Printf("%+v\n", err)
 }
