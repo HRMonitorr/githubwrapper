@@ -65,8 +65,8 @@ func ListRepositoriesOnlydDetail(ctx context.Context, personalToken, OrgName str
 	return
 }
 
-func UploadFileToRepository(ctx context.Context, PersonalToken, Reponame, OwnerName, Pathfile string) (response *github.RepositoryContentResponse, err error) {
-	file, err := os.Open(Pathfile)
+func UploadFileToRepository(val PushRepositories) (response *github.RepositoryContentResponse, err error) {
+	file, err := os.Open(val.Path)
 	if err != nil {
 		log.Fatalf("Gagal open file %s", err.Error())
 		return
@@ -85,12 +85,12 @@ func UploadFileToRepository(ctx context.Context, PersonalToken, Reponame, OwnerN
 		return
 	}
 	opts := &github.RepositoryContentFileOptions{
-		Message:   github.String("This is my commit message"),
+		Message:   github.String(val.Message),
 		Content:   bs,
-		Branch:    github.String("master"),
-		Committer: &github.CommitAuthor{Name: github.String("FirstName LastName"), Email: github.String("user@example.com")},
+		Branch:    github.String(val.Branch),
+		Committer: &github.CommitAuthor{Name: github.String(val.Username), Email: github.String(val.Email)},
 	}
-	response, _, err = MakeClient(PersonalToken).Repositories.CreateFile(ctx, OwnerName, Reponame, Pathfile, opts)
+	response, _, err = MakeClient(val.PersonalToken).Repositories.CreateFile(val.Context, val.OwnerName, val.Reponame, val.Path, opts)
 	if err != nil {
 		fmt.Printf("%+v", err.Error())
 		return
