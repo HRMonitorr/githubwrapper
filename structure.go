@@ -1,5 +1,7 @@
 package githubwrapper
 
+import "context"
+
 type Commit struct {
 	Type  string `json:"type"`
 	Items struct {
@@ -128,4 +130,16 @@ type Repositories struct {
 	Name     *string `json:"name"`
 	FullName *string `json:"full-name"`
 	Homepage *string `json:"homepage"`
+}
+
+type PushRepositories struct {
+	Context       context.Context `json:"context"`
+	PersonalToken string          `json:"personalToken"`
+	Reponame      string          `json:"reponame"`
+	OwnerName     string          `json:"ownerName"`
+	Path          string          `json:"path"`
+	Username      string          `json:"username"`
+	Email         string          `json:"email"`
+	Message       string          `json:"message"`
+	Branch        string          `json:"branch"`
 }
