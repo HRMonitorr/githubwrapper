@@ -46,3 +46,20 @@ func TestGetListRepositories(t *testing.T) {
 	fmt.Printf("%+v\n", *Det[0].Name)
 	fmt.Printf("%+v\n", err)
 }
+
+func TestUploadFileToRepository(t *testing.T) {
+	value := PushRepositories{
+		Context:       context.Background(),
+		PersonalToken: PersonalToken,
+		Reponame:      Reponame,
+		OwnerName:     OwnerName,
+		Path:          "crot.txt",
+		Username:      "username",
+		Email:         "email@gmail.com",
+		Message:       "Percobaan test push dari golang",
+		Branch:        "master",
+	}
+	push, err := UploadFileToRepository(value)
+	fmt.Printf("err %+v\n", err)
+	fmt.Printf("err %+v\n", push.Message)
+}
