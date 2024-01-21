@@ -40,6 +40,14 @@ func GetBranch(ctx context.Context, personalToken, repoName, ownerName string) (
 	return branches, nil
 }
 
+func MakeIssue(ctx context.Context, personalToken, repoName, OwnerName string, value github.IssueRequest) (*github.Response, error) {
+	_, responses, err := MakeClient(personalToken).Issues.Create(ctx, OwnerName, repoName, &value)
+	if err != nil {
+		return nil, err
+	}
+	return responses, nil
+}
+
 func ListRepositoriesOrg(ctx context.Context, personalToken, OrgName string) (dest []*github.Repository, err error) {
 	dest, _, err = MakeClient(personalToken).Repositories.ListByOrg(ctx, OrgName, nil)
 	if err != nil {
